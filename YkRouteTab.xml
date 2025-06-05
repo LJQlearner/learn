@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="GB2312"?>
+<YkRouteTab TabDstNum="11">
+<DstNode DstNo="0">0</DstNode><!--开关遥控-->
+<DstNode DstNo="1">14</DstNode> <!--电池活化,虚 电源模块占用四个遥控-->
+<DstNode DstNo="2">4</DstNode><!--远方复位-->
+<DstNode DstNo="3">22</DstNode><!--遥控软压板,虚-->
+<DstNode DstNo="4">21</DstNode><!--装置重启,虚-->
+</YkRouteTab>
