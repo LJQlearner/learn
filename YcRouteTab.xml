@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GB2312"?>
+<YcRouteTab TabDstNum="11">
+<DstNode DstNo="0">0</DstNode><!--Ua/Uab-->
+<DstNode DstNo="1">2</DstNode><!--Uc/Ubc-->
+<DstNode DstNo="2">3</DstNode><!--Ia   A相电流-->
+<DstNode DstNo="3">4</DstNode><!--Ib   B相电流-->
+<DstNode DstNo="4">5</DstNode><!--Ic   C相电流-->
+<DstNode DstNo="5">9</DstNode><!--3U0 零序电压-->
+<DstNode DstNo="6">10</DstNode><!--3I0 零序电流-->
+<DstNode DstNo="7">16</DstNode><!--P   总有功-->
+<DstNode DstNo="8">17</DstNode><!--Q   总无功-->
+<DstNode DstNo="9">15</DstNode><!--COS 功率因数-->
+<DstNode DstNo="10">280</DstNode><!--后备电源电压-->
+</YcRouteTab>
+
