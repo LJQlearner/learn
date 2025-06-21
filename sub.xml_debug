@@ -1,1 +1,198 @@
-
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a sub for nanjin , edit by ZHANGZHIHUA -->
+<SubStationNode>
+  <EnableWatchdog WatchdogLog="FALSE">WatchDogAM335X</EnableWatchdog>
+  <SoeRecord FileType="SQLLog" Limit="1024">SoeRecord.db</SoeRecord>
+  <YkRecord FileType="SQLLog" Limit="100">YkRecord.db</YkRecord>
+  <YcHistorical FileType="SQLLog" Limit="31" CfgFile="YcHistoricalCfg.xml">YcHistorical.db</YcHistorical>
+  <FmHistorical FileType="SQLLog" Limit="31" CfgFile="FmHistoricalCfg.xml">FmHistorical.db</FmHistorical>
+  <YcExtremum FileType="SQLLog" Limit="31" CfgFile="YcExtremumCfg.xml">YcExtremum.db</YcExtremum>
+  <ULogRecord FileType="SQLLog" Limit="1024">ULogRecord.db</ULogRecord>
+  <RefHistorical FileType="SQLLog" Limit="512">RefHistorical.db</RefHistorical>
+  <EnableDIO>DIOVirtual</EnableDIO>
+  <EnableBattery>BatteryCfg.xml</EnableBattery>
+  <YkDB DataBaseNum="5" IndexOrderEnable="FALSE" />
+  <YxDB DataBaseNum="3" IndexOrderEnable="FALSE" />
+  <CalcYxDBFile>CalcYxDBCfg.xml</CalcYxDBFile>
+  <ParaDB DataBaseNum="1800" IndexOrderEnable="FALSE" />
+  <ParaCfgFile>SubParaCfg.xml</ParaCfgFile>
+  <SynImm>true</SynImm>
+  <CallYmImm>true</CallYmImm>
+  <TestLocalYx LocalYxIndex="23" LocalYxVal="0">true</TestLocalYx>
+  <EnableHWEncrypt hwtype="SG1161Y">/dev/spidev1.0</EnableHWEncrypt>
+  <Address>1</Address>
+  <TestLocalYx LocalYxIndex="15" LocalYxVal="0">true</TestLocalYx>
+  <TerminalSet TerminalNum="4" IndexOrderEnable="FALSE">
+    <TerminalNode TerminalNO.="1" TerminalType="bf533">
+      <Protocol>BF533</Protocol>
+      <CommChannel>SerialPortChannel</CommChannel>
+      <LocalPort>/dev/ttyO1</LocalPort>
+      <SynImm>true</SynImm>
+      <Address>1</Address>
+      <PrintStatusTerm>false</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <YxDB DataBaseNum="400" IndexOrderEnable="FALSE" />
+      <YcDB DataBaseNum="250" IndexOrderEnable="TRUE" FloatYcDeadLimit="0.5" YcDeadLimit="50" />
+      <YkDB DataBaseNum="14" IndexOrderEnable="FALSE" />
+      <ParaDB DataBaseNum="2500" IndexOrderEnable="FALSE" />
+      <ParaCfgFile>TerParaCfg.xml</ParaCfgFile>
+    </TerminalNode>
+    <TerminalNode TerminalNO.="2">
+      <Protocol>H101_BGDW</Protocol>
+      <CommChannel>SerialPortChannel</CommChannel>
+      <LocalPort>/dev/ttyO3</LocalPort>
+      <PrintStatusTerm>false</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <SynImm>true</SynImm>
+      <Address>1</Address>
+      <YxDB DataBaseNum="9" IndexOrderEnable="FALSE" />
+      <YcDB DataBaseNum="30" IndexOrderEnable="TRUE" FloatYcDeadLimit="0.5" YcDeadLimit="50" />
+      <EmDB DataBaseNum="8" IndexOrderEnable="FALSE" />
+      <FmDB DataBaseNum="24" IndexOrderEnable="FALSE" />
+    </TerminalNode>
+    <TerminalNode TerminalNO.="3">
+      <Protocol>Modbus</Protocol>
+      <CommChannel>SerialPortChannel</CommChannel>
+      <LocalPort>/dev/ttyO2</LocalPort>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <Address>21</Address>
+      <YxDB DataBaseNum="20" IndexOrderEnable="FALSE" />
+      <YcDB DataBaseNum="8" IndexOrderEnable="TRUE" />
+      <YkDB DataBaseNum="6" IndexOrderEnable="FALSE" />
+    </TerminalNode>
+    <TerminalNode TerminalNO.="4">
+      <Protocol>SNTP</Protocol>
+      <CommChannel>UdpServerChannel</CommChannel>
+      <RemoteIP>192.168.1.213</RemoteIP>
+      <RemotePort>123</RemotePort>
+      <LocalIP>192.168.1.101</LocalIP>
+      <LocalPort>123</LocalPort>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <PrintStatusTerm>false</PrintStatusTerm>
+      <SynImm>false</SynImm>
+      <Address>1</Address>
+      <YxDB DataBaseNum="10" IndexOrderEnable="FALSE" />
+      <YcDB DataBaseNum="10" IndexOrderEnable="FALSE" />
+      <YkDB DataBaseNum="0" IndexOrderEnable="FALSE" />
+    </TerminalNode>
+  </TerminalSet>
+  <PriStationSet PriStationNum="7" IndexOrderEnable="FALSE">
+    <PriStationNode PriStationNO.="1">
+      <Protocol>S104_518_GDW</Protocol>
+      <CommChannel>TcpServerChannel</CommChannel>
+      <RemoteIP>192.168.11.77</RemoteIP>
+      <LocalPort>2404</LocalPort>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <bYcMul>false</bYcMul>
+      <Author>true</Author>
+			<!--YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+			<YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+			<YxTabFile>YxRouteTab.xml</YxTabFile>
+			<YkTabFile>YkRouteTab.xml</YkTabFile-->
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+    <PriStationNode PriStationNO.="2">
+      <Protocol>S101_BGDW</Protocol>
+      <CommChannel>TcpServerChannel</CommChannel>
+      <RemoteIP>127.0.0.1</RemoteIP>
+      <LocalPort>2409</LocalPort>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <!--YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile-->
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+    <PriStationNode PriStationNO.="3">
+      <Protocol>S101_BGDWS</Protocol>
+      <CommChannel>SerialPortChannel</CommChannel>
+      <LocalPort>/dev/ttyO4</LocalPort> <!--DB9-947-->
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <bYcMul>true</bYcMul>
+      <Author>true</Author>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+    <PriStationNode PriStationNO.="4">
+      <Protocol>S101_BGDWS</Protocol>
+      <CommChannel>SerialPortChannel</CommChannel>
+      <LocalPort>/dev/ttyO5</LocalPort>
+      <!--DB9-235-->
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <bYcMul>true</bYcMul>
+      <Author>true</Author>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+    <PriStationNode PriStationNO.="5">
+		<Protocol>S104_518_GDW</Protocol>
+      <CommChannel>TcpServerChannel</CommChannel>
+      <RemoteIP>192.100.101.50</RemoteIP><!---->
+      <LocalPort>2404</LocalPort>
+      <bYcMul>false</bYcMul>
+      <Author>true</Author>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+     <PriStationNode PriStationNO.="6">
+      <Protocol>S104_518_GDW</Protocol>
+      <CommChannel>TcpServerChannel</CommChannel>
+      <RemoteIP>192.100.101.10</RemoteIP>
+      <LocalPort>2404</LocalPort>
+      <bYcMul>true</bYcMul>
+      <Author>true</Author>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+     <PriStationNode PriStationNO.="7">
+      <Protocol>S104_518_GDW</Protocol>
+      <CommChannel>TcpServerChannel</CommChannel>
+      <RemoteIP>192.100.101.11</RemoteIP>
+      <LocalPort>2404</LocalPort>
+      <bYcMul>true</bYcMul>
+      <Author>true</Author>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+      <PrintStatusTerm>true</PrintStatusTerm>
+      <PrintFrameTerm>false</PrintFrameTerm>
+      <YcTabFile>YcRouteTab.xml</YcTabFile>
+      <YxTabFile>YxRouteTab.xml</YxTabFile>
+      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+      <Address>1</Address>
+    </PriStationNode>
+  </PriStationSet>
+</SubStationNode>
