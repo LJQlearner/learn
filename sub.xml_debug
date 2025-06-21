@@ -1,42 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This is a sub for nanjin , edit by ZHANGZHIHUA -->
+<!--
+  SubStationNode 配置文件
+  说明：该文件定义了分站(SubStation)节点的各种功能模块、数据库和通信终端配置。
+-->
 <SubStationNode>
+  <!-- 看门狗模块配置，防止程序假死 -->
+  <!-- WatchdogLog="FALSE" 表示不生成看门狗日志 -->
   <EnableWatchdog WatchdogLog="FALSE">WatchDogAM335X</EnableWatchdog>
+
+  <!-- SOE(顺序事件)记录配置 -->
+  <!-- FileType: 日志类型，Limit: 最大记录条数 -->
   <SoeRecord FileType="SQLLog" Limit="1024">SoeRecord.db</SoeRecord>
+
+  <!-- 遥控(YK)动作记录配置 -->
   <YkRecord FileType="SQLLog" Limit="100">YkRecord.db</YkRecord>
+
+  <!-- 遥测(YC)历史数据记录 -->
   <YcHistorical FileType="SQLLog" Limit="31" CfgFile="YcHistoricalCfg.xml">YcHistorical.db</YcHistorical>
+
+  <!-- 交直流分项历史数据记录 -->
   <FmHistorical FileType="SQLLog" Limit="31" CfgFile="FmHistoricalCfg.xml">FmHistorical.db</FmHistorical>
+
+  <!-- 遥测极值(YC Extremum)记录 -->
   <YcExtremum FileType="SQLLog" Limit="31" CfgFile="YcExtremumCfg.xml">YcExtremum.db</YcExtremum>
+
+  <!-- ULog自定义日志记录 -->
   <ULogRecord FileType="SQLLog" Limit="1024">ULogRecord.db</ULogRecord>
+
+  <!-- 参考历史数据记录 -->
   <RefHistorical FileType="SQLLog" Limit="512">RefHistorical.db</RefHistorical>
+
+  <!-- 数字量输出(DIO)虚拟化模块 -->
   <EnableDIO>DIOVirtual</EnableDIO>
+
+  <!-- 电池管理模块配置文件 -->
   <EnableBattery>BatteryCfg.xml</EnableBattery>
+
+  <!-- 遥控(YK)数据库配置 -->
+  <!-- DataBaseNum: 数据库条目数, IndexOrderEnable: 索引顺序使能 -->
   <YkDB DataBaseNum="5" IndexOrderEnable="FALSE" />
+
+  <!-- 遥信(YX)数据库配置 -->
   <YxDB DataBaseNum="3" IndexOrderEnable="FALSE" />
+
+  <!-- 计算遥信结果文件 -->
   <CalcYxDBFile>CalcYxDBCfg.xml</CalcYxDBFile>
+
+  <!-- 参数数据库配置 -->
   <ParaDB DataBaseNum="1800" IndexOrderEnable="FALSE" />
+
+  <!-- 参数配置文件 -->
   <ParaCfgFile>SubParaCfg.xml</ParaCfgFile>
+
+  <!-- 同步上送配置：是否立即同步 -->
   <SynImm>true</SynImm>
+
+  <!-- 调用月结(YM)是否立即执行 -->
   <CallYmImm>true</CallYmImm>
+
+  <!-- 本地遥信测试配置：Index表示遥信点号，Val初始值 -->
   <TestLocalYx LocalYxIndex="23" LocalYxVal="0">true</TestLocalYx>
+
+  <!-- 硬件加密模块配置 -->
+  <!-- hwtype: 硬件类型, 内容为SPI设备路径 -->
   <EnableHWEncrypt hwtype="SG1161Y">/dev/spidev1.0</EnableHWEncrypt>
+
+  <!-- 分站地址(站号) -->
   <Address>1</Address>
+
+  <!-- 另一组本地遥信测试配置 -->
   <TestLocalYx LocalYxIndex="15" LocalYxVal="0">true</TestLocalYx>
+
+  <!-- 通信终端集配置 -->
+  <!-- TerminalNum: 终端数量, IndexOrderEnable: 顺序使能 -->
   <TerminalSet TerminalNum="4" IndexOrderEnable="FALSE">
+
+    <!-- 第1号终端节点，类型bf533 -->
     <TerminalNode TerminalNO.="1" TerminalType="bf533">
+      <!-- 通信协议 -->
       <Protocol>BF533</Protocol>
+      <!-- 通信通道 -->
       <CommChannel>SerialPortChannel</CommChannel>
+      <!-- 本地串口 -->
       <LocalPort>/dev/ttyO1</LocalPort>
+      <!-- 同步上送 -->
       <SynImm>true</SynImm>
+      <!-- 终端地址 -->
       <Address>1</Address>
+      <!-- 是否打印状态帧 -->
       <PrintStatusTerm>false</PrintStatusTerm>
+      <!-- 是否打印报文帧 -->
       <PrintFrameTerm>false</PrintFrameTerm>
+      <!-- 遥信数据库 -->
       <YxDB DataBaseNum="400" IndexOrderEnable="FALSE" />
+      <!-- 遥测数据库 (FloatYcDeadLimit: 浮动死区, YcDeadLimit: 死区) -->
       <YcDB DataBaseNum="250" IndexOrderEnable="TRUE" FloatYcDeadLimit="0.5" YcDeadLimit="50" />
+      <!-- 遥控数据库 -->
       <YkDB DataBaseNum="14" IndexOrderEnable="FALSE" />
+      <!-- 参数数据库 -->
       <ParaDB DataBaseNum="2500" IndexOrderEnable="FALSE" />
+      <!-- 终端参数配置文件 -->
       <ParaCfgFile>TerParaCfg.xml</ParaCfgFile>
     </TerminalNode>
+
+    <!-- 第2号终端节点 -->
     <TerminalNode TerminalNO.="2">
       <Protocol>H101_BGDW</Protocol>
       <CommChannel>SerialPortChannel</CommChannel>
@@ -50,6 +117,8 @@
       <EmDB DataBaseNum="8" IndexOrderEnable="FALSE" />
       <FmDB DataBaseNum="24" IndexOrderEnable="FALSE" />
     </TerminalNode>
+
+    <!-- 第3号终端节点 -->
     <TerminalNode TerminalNO.="3">
       <Protocol>Modbus</Protocol>
       <CommChannel>SerialPortChannel</CommChannel>
@@ -61,6 +130,8 @@
       <YcDB DataBaseNum="8" IndexOrderEnable="TRUE" />
       <YkDB DataBaseNum="6" IndexOrderEnable="FALSE" />
     </TerminalNode>
+
+    <!-- 第4号终端节点 (SNTP 时间同步) -->
     <TerminalNode TerminalNO.="4">
       <Protocol>SNTP</Protocol>
       <CommChannel>UdpServerChannel</CommChannel>
@@ -76,61 +147,74 @@
       <YcDB DataBaseNum="10" IndexOrderEnable="FALSE" />
       <YkDB DataBaseNum="0" IndexOrderEnable="FALSE" />
     </TerminalNode>
+
   </TerminalSet>
+
+  <!-- 主站集配置 (IEC104/101等协议) -->
+  <!-- PriStationNum: 主站数量, IndexOrderEnable: 索引顺序控制 -->
   <PriStationSet PriStationNum="7" IndexOrderEnable="FALSE">
+
+    <!-- 第1号主站节点：IEC104协议通信 -->
     <PriStationNode PriStationNO.="1">
-      <Protocol>S104_518_GDW</Protocol>
-      <CommChannel>TcpServerChannel</CommChannel>
-      <RemoteIP>192.168.11.77</RemoteIP>
-      <LocalPort>2404</LocalPort>
-      <PrintStatusTerm>true</PrintStatusTerm>
-      <PrintFrameTerm>false</PrintFrameTerm>
-      <bYcMul>false</bYcMul>
-      <Author>true</Author>
-			<!--YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-			<YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-			<YxTabFile>YxRouteTab.xml</YxTabFile>
-			<YkTabFile>YkRouteTab.xml</YkTabFile-->
-      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
-      <Address>1</Address>
+      <Protocol>S104_518_GDW</Protocol> <!-- IEC104 GDW特定变种 -->
+      <CommChannel>TcpServerChannel</CommChannel> <!-- 基于TCP的通信通道 -->
+      <RemoteIP>192.168.11.77</RemoteIP> <!-- 对端主站IP -->
+      <LocalPort>2404</LocalPort> <!-- 本地监听104端口 -->
+      <PrintStatusTerm>true</PrintStatusTerm> <!-- 打印状态短信 -->
+      <PrintFrameTerm>false</PrintFrameTerm> <!-- 不打印报文帧 -->
+      <bYcMul>false</bYcMul> <!-- 遥测单通路发送 -->
+      <Author>true</Author> <!-- 启用鉴权 -->
+      <!-- 路由表配置（已注释，如需启用请解除注释） -->
+      <!--YcParaFile>CalcYcDBCfg.xml</YcParaFile-->
+      <!--YxParaFile>CalcYxDBCfg.xml</YxParaFile-->
+      <!--YcTabFile>YcRouteTab.xml</YcTabFile-->
+      <!--YxTabFile>YxRouteTab.xml</YxTabFile-->
+      <!--YkTabFile>YkRouteTab.xml</YkTabFile-->
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile> <!-- 参数路由表 -->
+      <Address>1</Address> <!-- 主站标识 -->
     </PriStationNode>
+
+    <!-- 第2号主站节点：IEC101协议 (本地测试环回) -->
     <PriStationNode PriStationNO.="2">
       <Protocol>S101_BGDW</Protocol>
       <CommChannel>TcpServerChannel</CommChannel>
-      <RemoteIP>127.0.0.1</RemoteIP>
+      <RemoteIP>127.0.0.1</RemoteIP> <!-- 本地环回地址 -->
       <LocalPort>2409</LocalPort>
       <PrintStatusTerm>true</PrintStatusTerm>
       <PrintFrameTerm>false</PrintFrameTerm>
-      <!--YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-      <YxTabFile>YxRouteTab.xml</YxTabFile>
-      <YkTabFile>YkRouteTab.xml</YkTabFile-->
+      <!-- 路由表（注释） -->
+      <!--YcParaFile>CalcYcDBCfg.xml</YcParaFile-->
+      <!--YxParaFile>CalcYxDBCfg.xml</YxParaFile-->
+      <!--YcTabFile>YcRouteTab.xml</YcTabFile-->
+      <!--YxTabFile>YxRouteTab.xml</YxTabFile-->
+      <!--YkTabFile>YkRouteTab.xml</YkTabFile-->
       <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
       <Address>1</Address>
     </PriStationNode>
+
+    <!-- 第3号主站节点：备用IEC101串口通道 -->
     <PriStationNode PriStationNO.="3">
-      <Protocol>S101_BGDWS</Protocol>
+      <Protocol>S101_BGDWS</Protocol> <!-- 串口GDW变种 -->
       <CommChannel>SerialPortChannel</CommChannel>
-      <LocalPort>/dev/ttyO4</LocalPort> <!--DB9-947-->
+      <LocalPort>/dev/ttyO4</LocalPort> <!-- 串口DB9-947 -->
       <PrintStatusTerm>true</PrintStatusTerm>
       <PrintFrameTerm>false</PrintFrameTerm>
-      <bYcMul>true</bYcMul>
+      <bYcMul>true</bYcMul> <!-- 遥测多路合并 -->
       <Author>true</Author>
-      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-      <YxTabFile>YxRouteTab.xml</YxTabFile>
-      <YkTabFile>YkRouteTab.xml</YkTabFile>
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile> <!-- 遥测参数 -->
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile> <!-- 遥信参数 -->
+      <YcTabFile>YcRouteTab.xml</YcTabFile> <!-- 遥测路由表 -->
+      <YxTabFile>YxRouteTab.xml</YxTabFile> <!-- 遥信路由表 -->
+      <YkTabFile>YkRouteTab.xml</YkTabFile> <!-- 遥控路由表 -->
       <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
       <Address>1</Address>
     </PriStationNode>
+
+    <!-- 第4号主站节点：第二备用IEC101串口 -->
     <PriStationNode PriStationNO.="4">
       <Protocol>S101_BGDWS</Protocol>
       <CommChannel>SerialPortChannel</CommChannel>
-      <LocalPort>/dev/ttyO5</LocalPort>
-      <!--DB9-235-->
+      <LocalPort>/dev/ttyO5</LocalPort> <!-- 串口DB9-235 -->
       <PrintStatusTerm>true</PrintStatusTerm>
       <PrintFrameTerm>false</PrintFrameTerm>
       <bYcMul>true</bYcMul>
@@ -143,56 +227,97 @@
       <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
       <Address>1</Address>
     </PriStationNode>
+
+    <!-- 第5号主站节点：远程TCP104 -->
     <PriStationNode PriStationNO.="5">
-		<Protocol>S104_518_GDW</Protocol>
-      <CommChannel>TcpServerChannel</CommChannel>
-      <RemoteIP>192.100.101.50</RemoteIP><!---->
-      <LocalPort>2404</LocalPort>
-      <bYcMul>false</bYcMul>
-      <Author>true</Author>
-      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <PrintStatusTerm>true</PrintStatusTerm>
-      <PrintFrameTerm>false</PrintFrameTerm>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-      <YxTabFile>YxRouteTab.xml</YxTabFile>
-      <YkTabFile>YkRouteTab.xml</YkTabFile>
-      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
-      <Address>1</Address>
-    </PriStationNode>
-     <PriStationNode PriStationNO.="6">
       <Protocol>S104_518_GDW</Protocol>
       <CommChannel>TcpServerChannel</CommChannel>
-      <RemoteIP>192.100.101.10</RemoteIP>
-      <LocalPort>2404</LocalPort>
-      <bYcMul>true</bYcMul>
-      <Author>true</Author>
-      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <PrintStatusTerm>true</PrintStatusTerm>
-      <PrintFrameTerm>false</PrintFrameTerm>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-      <YxTabFile>YxRouteTab.xml</YxTabFile>
-      <YkTabFile>YkRouteTab.xml</YkTabFile>
-      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
-      <Address>1</Address>
+      <RemoteIP>192.100.101.50</RemoteIP> <!-- 远程主站IP -->
+      <LocalPort>2404</LocalPort> <!-- 本地监听104端口 -->
+      <bYcMul>false</bYcMul> <!-- 遥测单通路发送 -->
+      <Author>true</Author> <!-- 启用鉴权 -->
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile> <!-- 遥测参数配置文件 -->
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile> <!-- 遥信参数配置文件 -->
+      <PrintStatusTerm>true</PrintStatusTerm> <!-- 打印状态信息 -->
+      <PrintFrameTerm>false</PrintFrameTerm> <!-- 不打印帧信息 -->
+      <YcTabFile>YcRouteTab.xml</YcTabFile> <!-- 遥测路由表 -->
+      <YxTabFile>YxRouteTab.xml</YxTabFile> <!-- 遥信路由表 -->
+      <YkTabFile>YkRouteTab.xml</YkTabFile> <!-- 遥控路由表 -->
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile> <!-- 参数路由表 -->
+      <Address>1</Address> <!-- 主站地址 -->
     </PriStationNode>
-     <PriStationNode PriStationNO.="7">
-      <Protocol>S104_518_GDW</Protocol>
-      <CommChannel>TcpServerChannel</CommChannel>
-      <RemoteIP>192.100.101.11</RemoteIP>
-      <LocalPort>2404</LocalPort>
-      <bYcMul>true</bYcMul>
-      <Author>true</Author>
-      <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
-      <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
-      <PrintStatusTerm>true</PrintStatusTerm>
-      <PrintFrameTerm>false</PrintFrameTerm>
-      <YcTabFile>YcRouteTab.xml</YcTabFile>
-      <YxTabFile>YxRouteTab.xml</YxTabFile>
-      <YkTabFile>YkRouteTab.xml</YkTabFile>
-      <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
-      <Address>1</Address>
-    </PriStationNode>
-  </PriStationSet>
+
+    <!-- 第6号主站节点：远程TCP104，多路合并 -->
+    <PriStationNode PriStationNO.="6">
+      <Protocol>S104_518_GDW</Protocol> <!-- IEC104 GDW变种 -->
+      <CommChannel>TcpServerChannel</CommChannel> <!-- TCP通信 -->
+      <RemoteIP>192.100.101.10</RemoteIP> <!-- 第6号主站IP -->
+      <LocalPort>2404</LocalPort> <!-- 本地监听端口 -->
+      <bYcMul>true</bYcMul> <!-- 遥测多路合并发送 -->
+      <Author>true</Author> <!-- 启用鉴权 -->
+      <YcParaFile>CalcYcDBCfg.xml</YcParaFile> <!-- 遥测参数配置文件 -->
+      <YxParaFile>CalcYxDBCfg.xml</YxParaFile> <!-- 遥信参数配置文件 -->
+      <PrintStatusTerm>true</PrintStatusTerm> <!-- 打印状态信息 -->
+      <PrintFrameTerm>false</PrintFrameTerm> <!-- 不打印帧信息 -->
+      <YcTabFile>YcRouteTab.xml</YcTabFile> <!-- 遥测路由表 -->
+      <YxTabFile>YxRouteTab.xml</YxTabFile> <!-- 遥信路由表 -->
+      <YkTabFile>YkRouteTab.xml</YkTabFile> <!-- 遥控路由表 -->
+      <ParaTabFile>ParaRouteTab.xml</ParaTabFile> <!-- 参数路由表 -->
+      <Address>1</Address> <!-- 主站地址 -->
+    </PriStationNode><!-- 结束第6号主站节点 -->
+
+
+<!-- ===== 第7号主站节点配置开始 ===== -->
+<PriStationNode PriStationNO.="7">
+    <!-- Protocol：主站通信协议，使用国网 104‐518 GDW 标准 -->
+    <Protocol>S104_518_GDW</Protocol>
+    
+    <!-- CommChannel：通信通道，TCP 服务端模式 -->
+    <CommChannel>TcpServerChannel</CommChannel>
+    
+    <!-- RemoteIP：远程主站的 IP 地址 -->
+    <RemoteIP>192.100.101.11</RemoteIP>
+    
+    <!-- LocalPort：本地监听端口 -->
+    <LocalPort>2404</LocalPort>
+    
+    <!-- bYcMul：是否启用遥测倍量关系 -->
+    <bYcMul>true</bYcMul>
+    
+    <!-- Author：是否开启写操作授权校验 -->
+    <Author>true</Author>
+    
+    <!-- YcParaFile：遥测参数配置文件 -->
+    <YcParaFile>CalcYcDBCfg.xml</YcParaFile>
+    
+    <!-- YxParaFile：遥信参数配置文件 -->
+    <YxParaFile>CalcYxDBCfg.xml</YxParaFile>
+    
+    <!-- PrintStatusTerm：是否打印遥信/状态变化信息 -->
+    <PrintStatusTerm>true</PrintStatusTerm>
+    
+    <!-- PrintFrameTerm：是否打印原始帧数据 -->
+    <PrintFrameTerm>false</PrintFrameTerm>
+    
+    <!-- YcTabFile：遥测路由表文件 -->
+    <YcTabFile>YcRouteTab.xml</YcTabFile>
+    
+    <!-- YxTabFile：遥信路由表文件 -->
+    <YxTabFile>YxRouteTab.xml</YxTabFile>
+    
+    <!-- YkTabFile：遥控路由表文件 -->
+    <YkTabFile>YkRouteTab.xml</YkTabFile>
+    
+    <!-- ParaTabFile：参数路由表文件 -->
+    <ParaTabFile>ParaRouteTab.xml</ParaTabFile>
+    
+    <!-- Address：主站逻辑地址（设备标识） -->
+    <Address>1</Address>
+</PriStationNode>
+<!-- ===== 第7号主站节点配置结束 ===== -->
+
+<!-- 结束所有主站节点集合 -->
+</PriStationSet>
+
+<!-- 根节点 SubStationNode 配置结束 -->
 </SubStationNode>
